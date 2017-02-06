@@ -17,7 +17,7 @@ func StoreBool(addr *bool, val bool) {
 	// We're also going to make the (currently safe) assumption that the alignment of the bool within the uint32
 	// will not change if gc moves the bool.
 	p32 := (*uint32)(unsafe.Pointer(uintptr(unsafe.Pointer(addr)) &^ uintptr(3)))
-	shift := 8 * (uintptr(unsafe.Pointer(addr)) - uintptr(unsafe.Pointer(addr)))
+	shift := 8 * (uintptr(unsafe.Pointer(addr)) - uintptr(unsafe.Pointer(p32)))
 	bits := 8 * unsafe.Sizeof(*addr)
 	mask := (uint32(1) << bits) - 1
 
@@ -36,7 +36,7 @@ func StoreBool(addr *bool, val bool) {
 func LoadBool(addr *bool) (val bool) {
 	// see comments in StoreBool
 	p32 := (*uint32)(unsafe.Pointer(uintptr(unsafe.Pointer(addr)) &^ uintptr(3)))
-	shift := 8 * (uintptr(unsafe.Pointer(addr)) - uintptr(unsafe.Pointer(addr)))
+	shift := 8 * (uintptr(unsafe.Pointer(addr)) - uintptr(unsafe.Pointer(p32)))
 	bits := 8 * unsafe.Sizeof(*addr)
 	mask := (uint32(1) << bits) - 1
 
