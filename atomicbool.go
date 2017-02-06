@@ -1,3 +1,8 @@
+/*
+  Atomic store and load of bool type.
+
+  Copyright 2017 Nicolas S. Dade
+*/
 package atomicbool
 
 import (
