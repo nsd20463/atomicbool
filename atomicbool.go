@@ -8,6 +8,8 @@ package atomicbool
 import (
 	"sync/atomic"
 	"unsafe"
+
+	"github.com/nsd20463/cpuendian"
 )
 
 func StoreBool(addr *bool, val bool) {
@@ -20,6 +22,9 @@ func StoreBool(addr *bool, val bool) {
 	shift := 8 * (uintptr(unsafe.Pointer(addr)) - uintptr(unsafe.Pointer(p32)))
 	bits := 8 * unsafe.Sizeof(*addr)
 	mask := (uint32(1) << bits) - 1
+	if cpuendian.Big {
+		shift = 32 - bits - shift
+	}
 
 	for {
 		i := atomic.LoadUint32(p32)
@@ -39,6 +44,9 @@ func LoadBool(addr *bool) (val bool) {
 	shift := 8 * (uintptr(unsafe.Pointer(addr)) - uintptr(unsafe.Pointer(p32)))
 	bits := 8 * unsafe.Sizeof(*addr)
 	mask := (uint32(1) << bits) - 1
+	if cpuendian.Big {
+		shift = 32 - bits - shift
+	}
 
 	i := atomic.LoadUint32(p32)
 	i >>= shift
