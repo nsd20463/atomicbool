@@ -167,3 +167,17 @@ func TestRace(t *testing.T) {
 
 	wg.Wait()
 }
+
+func BenchmarkLoad(b *testing.B) {
+	var x bool
+	for i := 0; i < b.N; i++ {
+		_ = LoadBool(&x)
+	}
+}
+
+func BenchmarkStore(b *testing.B) {
+	var x bool
+	for i := 0; i < b.N; i++ {
+		StoreBool(&x, true)
+	}
+}
