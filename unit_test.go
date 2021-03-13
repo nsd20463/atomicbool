@@ -181,3 +181,40 @@ func BenchmarkStore(b *testing.B) {
 		StoreBool(&x, true)
 	}
 }
+
+func TestBool32(t *testing.T) {
+	var x Bool32
+	if x.Load() {
+		t.Error("wrong")
+	}
+	x.Store(false)
+	if x.Load() {
+		t.Error("wrong")
+	}
+	x.Store(true)
+	if !x.Load() {
+		t.Error("wrong")
+	}
+	x.Store(true)
+	if !x.Load() {
+		t.Error("wrong")
+	}
+	x.Store(false)
+	if x.Load() {
+		t.Error("wrong")
+	}
+}
+
+func BenchmarkBool32Load(b *testing.B) {
+	var x Bool32
+	for i := 0; i < b.N; i++ {
+		x.Load()
+	}
+}
+
+func BenchmarkBool32Store(b *testing.B) {
+	var x Bool32
+	for i := 0; i < b.N; i++ {
+		x.Store(true)
+	}
+}
