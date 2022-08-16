@@ -1,12 +1,12 @@
 /*
-  bool-in-uint32 atomic store and load.
+bool-in-uint32 atomic store and load.
 
-  This type exists because of the aliasing of up to 3 other byte sized variables in
-  the 4 bytes containing a regular Go 'bool' trips up the go -race detection, producing
-  false races, because from Go's point of view we were reading and writing the 4 bytes,
-  even though we were only, and atomically, changing only one.
+This type exists because of the aliasing of up to 3 other byte sized variables in
+the 4 bytes containing a regular Go 'bool' trips up the go -race detection, producing
+false races, because from Go's point of view we were reading and writing the 4 bytes,
+even though we were only, and atomically, changing only one.
 
-  Copyright 2021 Nicolas S. Dade
+Copyright 2021 Nicolas S. Dade
 */
 package atomicbool
 
@@ -38,12 +38,14 @@ func (b *Bool32) Load() bool {
 }
 
 // CompareAndSwap atomically performs:
-//  if b == old {
-//    b = new
-//    return true
-// } else {
-//    return false
-// }
+//
+//	 if b == old {
+//	   b = new
+//	   return true
+//	} else {
+//
+//	   return false
+//	}
 func (b *Bool32) CompareAndSwap(old, new bool) (swapped bool) {
 	var nw, od uint32
 	if new {
