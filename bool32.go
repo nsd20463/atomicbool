@@ -19,6 +19,11 @@ import (
 // variables in memory.
 type Bool32 uint32
 
+const (
+	// True32 is the value of a Bool32 set to true. It's useful to initialize a Bool32 to true.
+	True32 = Bool32(1)
+)
+
 // Store atomically stores x in b
 func (b *Bool32) Store(x bool) {
 	var v uint32

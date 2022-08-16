@@ -203,6 +203,11 @@ func TestBool32(t *testing.T) {
 	if x.Load() {
 		t.Error("wrong")
 	}
+
+	y := True32
+	if !y.Load() {
+		t.Error("wrong")
+	}
 }
 
 func BenchmarkBool32Load(b *testing.B) {
